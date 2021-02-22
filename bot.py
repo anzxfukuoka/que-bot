@@ -2,8 +2,10 @@ import sys
 import os
 import telebot
 from flask import Flask, request
+from decouple import config
 
-token = "1638080970:AAFfULuQr1san3QxUoPEoQv4VSHBORyOdXY"
+token = config('TOKEN')
+webhook_url = config('WEBHOOK_URL')
 
 bot = telebot.TeleBot(token)
 
@@ -131,7 +133,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://que-bot.herokuapp.com/' + token)
+    bot.set_webhook(url=webhook_url + token)
     return "!", 200
 
 
@@ -142,5 +144,4 @@ if __name__ == "__main__":
         bot.polling()
     else:
         server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
-
     pass
