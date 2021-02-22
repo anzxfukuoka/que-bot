@@ -9,6 +9,7 @@ bot = telebot.TeleBot(token)
 
 server = Flask(__name__)
 
+"""
 def load_queue():
     with open("data.q", "a+", encoding="utf-8") as f:
         data = f.read()
@@ -20,6 +21,9 @@ def save_queue(queue):
     with open("data.q", "w+", encoding="utf-8") as f:
         data = "\n".join([q for q in queue if q != ""])
         f.write(data)
+"""
+
+queue = []
 
 print(load_queue())
 
@@ -45,15 +49,17 @@ def send_help(message):
 
 
 @bot.message_handler(commands=['clear'])
-def send_help(message):
-    save_queue([])
+def send_clear(message):
+    #save_queue([])
+    global queue
+    queue = []
     bot.send_message(message.chat.id, "очередь очищенна")
 
 
 @bot.message_handler(commands=['push'])
-def send_help(message):
+def send_push(message):
 
-    queue = load_queue()
+    #queue = load_queue()
 
     if message.from_user.username not in queue:
         queue.append(message.from_user.username)
@@ -61,12 +67,12 @@ def send_help(message):
     else:
         bot.send_message(message.chat.id, "ты уже в очереди")
 
-    save_queue(queue)
+    #save_queue(queue)
 
 
 @bot.message_handler(commands=['pop'])
-def send_help(message):
-    queue = load_queue()
+def send_pop(message):
+    #queue = load_queue()
 
     if message.from_user.username not in queue:
         queue.pop(queue.index(message.from_user.username))
@@ -74,12 +80,12 @@ def send_help(message):
     else:
         bot.send_message(message.chat.id, "ты не в очереди")
 
-    save_queue(queue)
+    #save_queue(queue)
 
 
 @bot.message_handler(commands=['next'])
-def send_help(message):
-    queue = load_queue()
+def send_next(message):
+    #queue = load_queue()
 
     if len(queue) > 1:
         queue.pop(0)
@@ -90,12 +96,12 @@ def send_help(message):
     else:
         bot.send_message(message.chat.id, "в очереди никого нет")
 
-    save_queue(queue)
+    #save_queue(queue)
 
 
 @bot.message_handler(commands=['show'])
-def send_help(message):
-    queue = load_queue()
+def send_show(message):
+    #queue = load_queue()
 
     if len(queue) > 0:
         bot.send_message(message.chat.id, "очередь:\n" + "\n".join(queue))
