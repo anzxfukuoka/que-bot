@@ -25,7 +25,7 @@ def save_queue(queue):
 
 queue = []
 
-print(load_queue())
+#print(load_queue())
 
 help = """
 /start - перезагрузить бота
