@@ -74,7 +74,7 @@ def send_push(message):
 def send_pop(message):
     #queue = load_queue()
 
-    if message.from_user.username not in queue:
+    if message.from_user.username in queue:
         queue.pop(queue.index(message.from_user.username))
         bot.send_message(message.chat.id, message.from_user.username + " вышел из очереди")
     else:
